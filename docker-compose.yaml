@@ -1,0 +1,50 @@
+
+
+services:
+  redis:
+    image: redis
+    container_name: redis_chatapp
+    ports:
+      - 6379:6379
+    
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+
+
+  django_asgi:
+    build:
+      context: ./backend/
+    container_name: django_asgi
+    command: daphne -b 0.0.0.0 -p 8000 backend.asgi:application
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - db
+      - redis
+
+    
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    container_name: angularapp
+    volumes:
+      - .:/angular
+    ports:
+      - 80:80
+    expose:
+      - 80
+
