@@ -1,0 +1,18 @@
+<p *ngIf="!isAuthenticated">Not Logged in</p>
+
+
+
+<div class="bg-body-tertiary"data-bs-theme = "dark" style = "width: 380px; overflow-y: scroll; height: 100%; display: inline-block; margin-right: 20px;" *ngIf = "isAuthenticated">
+  <div class="list-group list-group-flush border-bottom" >
+    <a routerLink="{{chat.key}}" routerLinkActive="active" class="list-group-item list-group-item-action py-3 lh-sm" *ngFor = "let chat of groupMap | keyvalue">
+      <div class="d-flex w-100 align-items-center justify-content-between">
+        <strong class="mb-1">{{chat.value.name}}</strong>
+      </div>
+      <div class="col-10 mb-1 small">{{chat.value.users.length}} users</div>
+    </a>
+  </div>
+</div>
+
+
+
+<router-outlet />

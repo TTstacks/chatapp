@@ -1,0 +1,30 @@
+<div class="input-group" style = "width: 100%; height: 25px;">
+    <input type="search" class="form-control rounded" placeholder="Search user" aria-label="Search" aria-describedby="search-addon" [(ngModel)]="userEmail" />
+    <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init (click) = "searchUsers()">search</button>
+</div>
+
+<div class="my-3 p-3 rounded box-shadow" style = "overflow-y: auto; height: 500px;">
+    <div class="media text-muted pt-3 border-bottom border-gray" *ngFor = "let user of users" style = "display: flex; justify-content: space-between;">
+      <p class="media-body pb-3 mb-0 small lh-125">
+        <strong class="d-block text-gray-dark">{{user.name}}</strong>
+        {{user.email}}
+      </p>
+        @if(!usersToAdd.includes(user.email)){
+           <button style = "align-self: center;" class = "btn btn-primary" (click) = "addUser(user)">
+               Add
+           </button>
+        }@else {
+           <button style = "align-self: center;" class = "btn btn-danger" (click) = "deleteUser(user)">
+                Remove
+           </button>
+        }
+    </div>
+</div>
+
+<button type="button" class="btn btn-success" *ngIf = "usersToAdd.length" style = "width: 100px;" (click) = "addUsersToRoom()">
+    Add users
+</button>
+    
+<button type="button" class="btn btn-success" disabled *ngIf = "!usersToAdd.length && users.length" style = "width: 100px;">
+    Add users
+</button>

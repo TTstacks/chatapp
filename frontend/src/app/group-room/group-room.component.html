@@ -1,0 +1,54 @@
+<div class="col-md-6 col-lg-7 col-xl-7" style = "display: flex; flex-direction: column; width: 100%;">
+
+    <div class="pt-3 pe-3" data-mdb-perfect-scrollbar-init style="flex: 1; overflow-y: scroll;"  data-mbd-perfect-scrollbar-initialized="true" #messageBody>
+      @for(message of this.messages; track $index){
+        @if(message.user && this.userInfo){
+          @if(message.user.email === this.userInfo.email){
+            
+            <div class="d-flex flex-column align-items-end">
+              <div class = "p-2 me-3">
+                {{message.user.name}}
+              </div>
+              <div class="p-2">
+                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary" style = "max-width: 700px;">
+                  {{message.text}}
+                </p>
+                <p class="small me-3 mb-3 rounded-3 text-muted float-end">{{message.delivered}}</p>
+              </div>
+            </div>
+          }@else {
+            <div class="d-flex flex-column align-items-start">
+              <div class= "p-2 ms-3">
+                {{message.user.name}}
+              </div>
+              <div class = "p-2">
+                <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary" style = "max-width: 700px;">
+                  {{message.text}}
+                </p>
+                <p class="small ms-3 mb-3 rounded-3 text-muted ">{{message.delivered}}</p>
+              </div>
+            </div>
+          }
+        }
+      }
+    </div>
+    <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2" style = "margin-bottom: 10px;">
+      <a style = "cursor: pointer; margin-right: 10px;" routerLink="add-user" routerLinkActive="active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+      </a>
+
+      <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
+        placeholder="Type message" [(ngModel)] = "inputValue">
+      <a (click) = "getInputValue()" style = "cursor: pointer; margin-left: 10px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+        </svg>
+      </a>
+    </div>
+</div>
+
+<router-outlet/>
